@@ -9,6 +9,8 @@ public class Gem : MonoBehaviour {
 	string color;
 	GameObject gemCube;
 
+	public GameObject board;
+
 	// Use this for initialization
 	void Start () {
 		gemCube = transform.Find ("Cube").gameObject;
@@ -24,5 +26,9 @@ public class Gem : MonoBehaviour {
 		color = COLORMAP [Random.Range (0, COLORMAP.Length)];
 		Material gemMaterial = (Material)Resources.Load ("Materials/" + color);
 		gemCube.GetComponent<Renderer> ().material = gemMaterial;
+	}
+
+	void OnMouseDown() {
+		BoardManager.onGemSelected (this);
 	}
 }

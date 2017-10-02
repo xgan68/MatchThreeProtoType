@@ -108,6 +108,53 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &530650811
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4310108688175058, guid: bacbcf4237d6e0d419bfbbc237980fd8, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -5.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 4310108688175058, guid: bacbcf4237d6e0d419bfbbc237980fd8, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4310108688175058, guid: bacbcf4237d6e0d419bfbbc237980fd8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4310108688175058, guid: bacbcf4237d6e0d419bfbbc237980fd8, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4310108688175058, guid: bacbcf4237d6e0d419bfbbc237980fd8, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4310108688175058, guid: bacbcf4237d6e0d419bfbbc237980fd8, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4310108688175058, guid: bacbcf4237d6e0d419bfbbc237980fd8, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4310108688175058, guid: bacbcf4237d6e0d419bfbbc237980fd8, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114040343894667982, guid: bacbcf4237d6e0d419bfbbc237980fd8,
+        type: 2}
+      propertyPath: board
+      value: 
+      objectReference: {fileID: 747493346}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: bacbcf4237d6e0d419bfbbc237980fd8, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &747493346
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +168,7 @@ GameObject:
   - component: {fileID: 747493347}
   - component: {fileID: 747493351}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
