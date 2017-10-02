@@ -7,6 +7,8 @@ public class BoardManager : MonoBehaviour {
 	private readonly int BOARDWIDTH = 5;
 	private readonly int BOARDHEIGHT = 5;
 
+	public static BoardManager instance;
+
 	enum PlayerStates {FirstGemSelected, None, Swapping};
 	static PlayerStates currentState = PlayerStates.None;
 
@@ -14,29 +16,38 @@ public class BoardManager : MonoBehaviour {
 
 	static Vector3 target1, target2;
 
+	static bool gem1OnPosition, gem2OnPosition;
+
 	// Use this for initialization
 	void Start () {
+		instance = this;
 		onNewGameStart ();
+		gem1OnPosition = false;
+		gem2OnPosition = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (currentState);
 		if (currentState == PlayerStates.Swapping) {
-			togglePhysics (true);
-			gem1.transform.position = Vector3.Lerp (gem1.transform.position, target2, Time.deltaTime * 5);
-			gem2.transform.position = Vector3.Lerp (gem2.transform.position, target1, Time.deltaTime * 5);
-			if (Vector3.Distance(gem1.transform.position, target2) < .01f &&
-				Vector3.Distance(gem2.transform.position, target1) < .01f) {
-				currentState = PlayerStates.None;
-				togglePhysics (false);
-				gem1 = null;
-				gem2 = null;
+			if (gem1.onPosition && gem2.onPosition) {
+				Debug.Log ("afasdf");
+				resetGems ();
 			}
 		}	
 	}
 
-	void togglePhysics(bool enable) {
+	float startTime;
+	void moveGem(Gem gem, Vector3 start, Vector3 target) {
+		Vector3 center = (start + target) * 0.5f;
+		center -= new Vector3 (0, 0, -0.1f);
+		Vector3 riseRel = start - center;
+		Vector3 setRel = target - center;
+		float frac = (Time.time - startTime) / 2f;
+		gem.transform.position = Vector3.Slerp (riseRel, setRel, frac);
+		gem.transform.position += center;
+	}
+
+	static void togglePhysics(bool enable) {
 		gem1.gameObject.GetComponent<Rigidbody> ().isKinematic = enable;
 		gem2.gameObject.GetComponent<Rigidbody> ().isKinematic = enable;
 	}
@@ -69,8 +80,11 @@ public class BoardManager : MonoBehaviour {
 			if (gem1 != gem) {
 				gem2 = gem;
 				currentState = PlayerStates.Swapping;
-				target1 = gem1.transform.position;
-				target2 = gem2.transform.position;
+				target2 = new Vector3(Mathf.Round(gem1.transform.position.x), 
+									Mathf.Round(gem1.transform.position.y), 0);
+				target1 = new Vector3(Mathf.Round(gem2.transform.position.x), 
+									Mathf.Round(gem2.transform.position.y), 0);
+				swapGems(gem1, gem2);
 			} else {
 				currentState = PlayerStates.None;
 				gem1 = null;
@@ -95,14 +109,33 @@ public class BoardManager : MonoBehaviour {
 		}
 	}
 
-	void swapGems(Gem gem1, Gem gem2) {
+	static void swapGems(Gem gem1, Gem gem2) {
+		togglePhysics (true);
 
-		float fraction = 0;
+		instance.StartCoroutine(moveGem(gem1, target1));
+		instance.StartCoroutine(moveGem(gem2, target2));
 
 	}
 
-	void moveGem(Gem gem, Vector3 target) {
-		float fraction = 0;
+	void resetGems() {
+		currentState = PlayerStates.None;
+		togglePhysics (false);
+		gem1.onPosition = false;
+		gem2.onPosition = false;
+		gem1 = null;
+		gem2 = null;
+	}
 
+
+	static IEnumerator moveGem(Gem gem, Vector3 target) {
+		float remainingDistance = Vector3.Distance (gem.transform.position, target);
+
+		while (remainingDistance > 0.01f) {
+			gem.transform.position = Vector3.Lerp (gem.transform.position, target, Time.deltaTime * 5);
+			remainingDistance = Vector3.Distance (gem.transform.position, target);
+
+			yield return null;
+		}
+		gem.onPosition = true;;
 	}
 }

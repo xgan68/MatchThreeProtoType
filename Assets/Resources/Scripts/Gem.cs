@@ -11,10 +11,14 @@ public class Gem : MonoBehaviour {
 
 	public GameObject board;
 
+	public bool onPosition;
+	public bool isMatched;
+
 	// Use this for initialization
 	void Start () {
 		gemCube = transform.Find ("Cube").gameObject;
 		generateGem ();
+		onPosition = false;
 	}
 	
 	// Update is called once per frame
@@ -31,4 +35,5 @@ public class Gem : MonoBehaviour {
 	void OnMouseDown() {
 		BoardManager.onGemSelected (this);
 	}
+		
 }
