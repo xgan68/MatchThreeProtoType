@@ -4,36 +4,107 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour {
 
-	private readonly int BOARDWIDTH = 5;
-	private readonly int BOARDHEIGHT = 5;
+	private readonly int BOARDWIDTH = 6;
+	private readonly int BOARDHEIGHT = 6;
 
 	public static BoardManager instance;
 
-	enum PlayerStates {FirstGemSelected, None, Swapping};
-	static PlayerStates currentState = PlayerStates.None;
+	enum PlayerStates {FirstGemSelected, None, Swapping, CheckMatch};
+	static PlayerStates currentState;
 
 	static Gem gem1, gem2;
 
 	static Vector3 target1, target2;
 
-	static bool gem1OnPosition, gem2OnPosition;
+	private Gem startingGem;
+
+	List<Gem> gems = new List<Gem> ();
 
 	// Use this for initialization
 	void Start () {
 		instance = this;
 		onNewGameStart ();
-		gem1OnPosition = false;
-		gem2OnPosition = false;
+		currentState = PlayerStates.CheckMatch;
+		//checkForMatch ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log (currentState);
 		if (currentState == PlayerStates.Swapping) {
-			if (gem1.onPosition && gem2.onPosition) {
-				Debug.Log ("afasdf");
+			if (gem1 != null && gem2 != null 
+				&& gem1.onPosition && gem2.onPosition) {
+				checkForMatch ();
 				resetGems ();
 			}
-		}	
+			if (isBoardStable()) {
+				currentState = PlayerStates.CheckMatch;
+
+			}
+
+		} else if (isBoardStable() && currentState == PlayerStates.CheckMatch) {
+			currentState = PlayerStates.Swapping;
+			checkForMatch ();
+		}
+
+	}
+
+	void checkForMatch() {
+		if (foundMatch ()) {
+			destroyMatchGems ();
+		} else {
+			currentState = PlayerStates.None;
+		}
+
+	}
+
+
+	bool isBoardStable() {
+		foreach (Gem gem in gems) {
+			//Debug.Log (gem.GetComponent<Rigidbody>().velocity.y);
+			if (Mathf.Abs(gem.GetComponent<Rigidbody>().velocity.y) > 0.01f) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	void destroyMatchGems() {
+		for (int i = 0; i < gems.Count; i++) {
+			if (gems[i].isMatched) {
+				gems[i].generateGem ();
+				gems [i].transform.position = new Vector3 (
+					gems[i].transform.position.x,
+					gems[i].transform.position.y + 7,
+					gems[i].transform.position.z);
+
+				GameManager.scoreUp (1);
+			}
+		}
+	}
+
+	bool foundMatch() {
+		bool result = false;
+		foreach (Gem gem in gems) {
+			if (gem.getNeighbor(0) != null && gem.getNeighbor(1) != null
+				&& gem.getNeighbor(0).getColor() == gem.getNeighbor(1).getColor() 
+				&& gem.getNeighbor(0).getColor() == gem.getColor()) {
+				gem.getNeighbor (0).isMatched = true;
+				gem.getNeighbor (1).isMatched = true;
+				gem.isMatched = true;
+				result = true;
+			}
+			if (gem.getNeighbor(2) != null && gem.getNeighbor(3) != null
+				&& gem.getNeighbor(2).getColor() == gem.getNeighbor(3).getColor() 
+				&& gem.getNeighbor(2).getColor() == gem.getColor()) {
+				gem.getNeighbor (2).isMatched = true;
+				gem.getNeighbor (3).isMatched = true;
+				gem.isMatched = true;
+				result = true;
+			}
+		}
+		return result;
 	}
 
 	float startTime;
@@ -53,7 +124,7 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	void onNewGameStart() {
-		generateGems(BOARDWIDTH, BOARDWIDTH);
+		generateGems(BOARDWIDTH, BOARDHEIGHT);
 	}
 
 
@@ -63,6 +134,7 @@ public class BoardManager : MonoBehaviour {
 				GameObject gemGameObject = Instantiate((GameObject)Resources.Load("Prefabs/Gem"), 
 														new Vector3(x - width/2 ,y , 0), 
 														Quaternion.identity)as GameObject;
+				gems.Add (gemGameObject.GetComponent<Gem>());
 			}
 		}
 	}
@@ -73,6 +145,7 @@ public class BoardManager : MonoBehaviour {
 			toggleRotate (gem);
 			gem1 = gem;
 			currentState = PlayerStates.FirstGemSelected;
+			//Debug.Log (gem1.neighbors.Length);
 			break;
 
 		case PlayerStates.FirstGemSelected:
@@ -96,12 +169,15 @@ public class BoardManager : MonoBehaviour {
 		case PlayerStates.Swapping:
 			Debug.Log ("Swapping");
 			break;
+
+		case PlayerStates.CheckMatch:
+			Debug.Log ("Swapping");
+			break;
 		}
 	}
 
 	static void toggleRotate(Gem gem) {
 		Rotate rotate = gem.transform.Find("Cube").GetComponent<Rotate> ();
-		Debug.Log (rotate.ToString());
 		if (rotate.isActiveAndEnabled) {
 			rotate.enabled = false;
 		} else {
@@ -118,7 +194,7 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	void resetGems() {
-		currentState = PlayerStates.None;
+		
 		togglePhysics (false);
 		gem1.onPosition = false;
 		gem2.onPosition = false;
@@ -137,5 +213,13 @@ public class BoardManager : MonoBehaviour {
 			yield return null;
 		}
 		gem.onPosition = true;;
+	}
+
+	void OnTriggerEnter(Collider other) 
+	{
+		if(other.tag =="Gem")
+		{
+			startingGem = other.gameObject.GetComponent<Gem>();
+		}
 	}
 }
