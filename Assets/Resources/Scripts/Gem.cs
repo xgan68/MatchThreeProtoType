@@ -14,7 +14,7 @@ public class Gem : MonoBehaviour {
 	public bool onPosition;
 	public bool isMatched;
 
-	private Gem[] neighbors = new Gem[4];
+	public Gem[] neighbors = new Gem[4];
 
 	[SerializeField]
 	private string[] nColors = new string[4];
@@ -42,7 +42,7 @@ public class Gem : MonoBehaviour {
 		isMatched = false;
 		for (int i = 0; i < 4; i ++) 
 			neighbors [i] = null;
-		
+		gameObject.GetComponent<Rigidbody> ().isKinematic = false;
 
 		transform.Find ("SensorHolder").gameObject.SetActive (true);
 	}

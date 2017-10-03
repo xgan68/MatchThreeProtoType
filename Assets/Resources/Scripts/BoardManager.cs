@@ -34,10 +34,9 @@ public class BoardManager : MonoBehaviour {
 		if (currentState == PlayerStates.Swapping) {
 			if (gem1 != null && gem2 != null 
 				&& gem1.onPosition && gem2.onPosition) {
-				checkForMatch ();
-				resetGems ();
+				currentState = PlayerStates.CheckMatch;
 			}
-			if (isBoardStable()) {
+			if (gem1 == null && gem2 == null && isBoardStable()) {
 				currentState = PlayerStates.CheckMatch;
 
 			}
@@ -50,11 +49,14 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	void checkForMatch() {
+		if (gem1 && gem2)
+		resetGems ();
 		if (foundMatch ()) {
 			destroyMatchGems ();
 		} else {
 			currentState = PlayerStates.None;
 		}
+
 
 	}
 

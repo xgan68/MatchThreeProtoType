@@ -15,7 +15,7 @@ public class Sensor : MonoBehaviour {
 		gem = transform.parent.parent.GetComponent<Gem> ();
 	}
 
-	void OnTriggerEnter(Collider other) {
+	void OnTriggerStay(Collider other) {
 		if (other.tag == "Gem") {
 			gem.addNeighbor (other.GetComponent<Gem> (), dir);
 		}
