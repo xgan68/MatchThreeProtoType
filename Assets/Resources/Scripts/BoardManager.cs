@@ -72,17 +72,22 @@ public class BoardManager : MonoBehaviour {
 	}
 
 
+
 	void destroyMatchGems() {
+		List<Gem> destroyGroup = new List<Gem>();
 		for (int i = 0; i < gems.Count; i++) {
 			if (gems[i].isMatched) {
-				gems[i].generateGem ();
-				gems [i].transform.position = new Vector3 (
-					gems[i].transform.position.x,
-					gems[i].transform.position.y + 7,
-					gems[i].transform.position.z);
-
-				GameManager.scoreUp (1);
+				destroyGroup.Add(gems[i]);
+				gems [i].explode ();
 			}
+		}
+		foreach (Gem gem in destroyGroup) {
+			gem.generateGem ();
+			gem.transform.position = new Vector3 (
+				gem.transform.position.x,
+				gem.transform.position.y + 7,
+				gem.transform.position.z);
+			GameManager.scoreUp (1);
 		}
 	}
 

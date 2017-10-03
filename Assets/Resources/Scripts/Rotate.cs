@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Rotate : MonoBehaviour {
-
+	float rotateSpeed = 500f;
 	// Use this for initialization
 	void Start () {
 		
@@ -11,6 +11,6 @@ public class Rotate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Rotate (Vector3.up * Time.deltaTime * 60, Space.World);
+		transform.Rotate (Vector3.up * Time.deltaTime * rotateSpeed, Space.World);
 	}
 }

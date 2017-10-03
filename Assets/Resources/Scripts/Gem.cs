@@ -19,6 +19,8 @@ public class Gem : MonoBehaviour {
 	[SerializeField]
 	private string[] nColors = new string[4];
 
+	private int particleToEmit = 5;
+
 	// Use this for initialization
 	void Start () {
 		gemCube = transform.Find ("Cube").gameObject;
@@ -39,11 +41,13 @@ public class Gem : MonoBehaviour {
 		color = COLORMAP [Random.Range (0, COLORMAP.Length)];
 		Material gemMaterial = (Material)Resources.Load ("Materials/" + color);
 		gemCube.GetComponent<Renderer> ().material = gemMaterial;
+
+		gameObject.GetComponent<ParticleSystem>().GetComponent<Renderer> ().material = gemMaterial;
+
 		isMatched = false;
 		for (int i = 0; i < 4; i ++) 
 			neighbors [i] = null;
 		gameObject.GetComponent<Rigidbody> ().isKinematic = false;
-
 		transform.Find ("SensorHolder").gameObject.SetActive (true);
 	}
 
@@ -66,5 +70,9 @@ public class Gem : MonoBehaviour {
 
 	public Gem getNeighbor(int dir) {
 		return neighbors [dir];
+	}
+
+	public void explode() {
+		gameObject.GetComponent<ParticleSystem>().Emit (particleToEmit);
 	}
 }
