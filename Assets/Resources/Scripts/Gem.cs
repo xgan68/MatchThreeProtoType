@@ -81,4 +81,13 @@ public class Gem : MonoBehaviour {
 	public int countNeighbors() {
 		return neighbors.Length;
 	}
+
+	public bool containsNeighbor(Gem gem) {
+		foreach (Gem neighbor in neighbors) {
+			if (neighbor == gem) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

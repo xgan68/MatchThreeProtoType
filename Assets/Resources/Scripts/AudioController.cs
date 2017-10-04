@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour {
 
-	[SerializeField]
 	private AudioClip cubeExplode;
 	private AudioClip cubeCombo;
+	private AudioClip invailedMove;
 	[SerializeField]
 	private AudioSource SFX;
 	[SerializeField]
@@ -19,6 +19,7 @@ public class AudioController : MonoBehaviour {
 	void Start () {
 		cubeExplode = (AudioClip)Resources.Load ("SFX/Cube_Explode");
 		cubeCombo = (AudioClip)Resources.Load ("SFX/Cube_Combo");
+		invailedMove = (AudioClip)Resources.Load ("SFX/Invailed_Move");
 		//audioSource.clip = cubeExplode;
 	}
 	
@@ -30,12 +31,16 @@ public class AudioController : MonoBehaviour {
 	public void onCubeExplode(float pitch) {
 		SFX.pitch = startingPitch + pitch;
 		SFX.PlayOneShot(cubeExplode, 1f);
-		//audioSource.Play();
 	}
 
 	public void onCubeCombo(float pitch) {
 		SFX.pitch = startingPitch + pitch;
 		SFX.PlayOneShot(cubeCombo, 1f);
-		//audioSource.Play();
+	}
+
+	public void onInvailedMove() {
+		//SFX.pitch = 0.5f;
+		SFX.PlayOneShot(invailedMove, 1f);
+		//SFX.pitch = 1f;
 	}
 }

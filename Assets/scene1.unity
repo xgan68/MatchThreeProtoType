@@ -218,7 +218,7 @@ Prefab:
     - target: {fileID: 224351404151097886, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 10.109863
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 224351404151097886, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
         type: 2}
@@ -238,17 +238,37 @@ Prefab:
     - target: {fileID: 224351404151097886, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 80
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 114989795156391106, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
         type: 2}
       propertyPath: m_FontData.m_FontSize
-      value: 70
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 114989795156391106, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
         type: 2}
       propertyPath: m_FontData.m_MaxSize
       value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 114104976039396728, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
+        type: 2}
+      propertyPath: m_ScreenMatchMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 223955575562782204, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
+        type: 2}
+      propertyPath: m_PixelPerfect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114104976039396728, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
+        type: 2}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224351404151097886, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a3dc47aecdb39054e9d19e6f76dbbe53, type: 2}
@@ -517,7 +537,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dad52994d3f6c54b904cd575cc0bee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeExplode: {fileID: 8300000, guid: 58de79d478d179d48914882b9b61794c, type: 3}
   SFX: {fileID: 410679455}
   BGM: {fileID: 1196307254}
 --- !u!4 &698581919
@@ -895,6 +914,7 @@ GameObject:
   - component: {fileID: 2057404075}
   - component: {fileID: 2057404074}
   - component: {fileID: 2057404079}
+  - component: {fileID: 2057404080}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -966,7 +986,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2057404073}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -13}
+  m_LocalPosition: {x: 0, y: 0.7, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 911885073}
@@ -985,3 +1005,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profile: {fileID: 11400000, guid: adf4bc3f911a0f0468de7810df396f42, type: 2}
+--- !u!114 &2057404080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2057404073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31db4d0874c229d479b60bef13f912d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
