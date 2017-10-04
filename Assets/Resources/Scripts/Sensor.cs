@@ -16,7 +16,7 @@ public class Sensor : MonoBehaviour {
 	}
 
 	void OnTriggerStay(Collider other) {
-		if (other.tag == "Gem") {
+		if (other.tag == "Gem" && other.GetComponent<Gem> () != null && gem != null) {
 			gem.addNeighbor (other.GetComponent<Gem> (), dir);
 		}
 	}

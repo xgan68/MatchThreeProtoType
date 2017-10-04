@@ -14,7 +14,8 @@ public class Gem : MonoBehaviour {
 	public bool onPosition;
 	public bool isMatched;
 
-	public Gem[] neighbors = new Gem[4];
+
+	private Gem[] neighbors = new Gem[4];
 
 	[SerializeField]
 	private string[] nColors = new string[4];
@@ -26,6 +27,7 @@ public class Gem : MonoBehaviour {
 		gemCube = transform.Find ("Cube").gameObject;
 		generateGem ();
 		onPosition = false;
+		neighbors = new Gem[4];
 		//neighbors = new ArrayList<> ();
 	}
 	
@@ -74,5 +76,9 @@ public class Gem : MonoBehaviour {
 
 	public void explode() {
 		gameObject.GetComponent<ParticleSystem>().Emit (particleToEmit);
+	}
+
+	public int countNeighbors() {
+		return neighbors.Length;
 	}
 }

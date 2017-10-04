@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour {
 
-	private readonly int BOARDWIDTH = 6;
-	private readonly int BOARDHEIGHT = 6;
+	private readonly int BOARDWIDTH = 5;
+	private readonly int BOARDHEIGHT = 8;
 
 	public static BoardManager instance;
 
@@ -17,14 +17,19 @@ public class BoardManager : MonoBehaviour {
 	static Vector3 target1, target2;
 
 	private Gem startingGem;
+	private int dropHeight = 10;
 
 	List<Gem> gems = new List<Gem> ();
 
+	AudioController audioController;
+
+	private static int comboCount;
 	// Use this for initialization
 	void Start () {
 		instance = this;
 		onNewGameStart ();
 		currentState = PlayerStates.CheckMatch;
+		audioController = GameObject.Find ("AudioController").GetComponent<AudioController> ();
 		//checkForMatch ();
 	}
 	
@@ -44,7 +49,7 @@ public class BoardManager : MonoBehaviour {
 		} else if (isBoardStable() && currentState == PlayerStates.CheckMatch) {
 			currentState = PlayerStates.Swapping;
 			checkForMatch ();
-		}
+		} 
 
 	}
 
@@ -55,6 +60,7 @@ public class BoardManager : MonoBehaviour {
 			destroyMatchGems ();
 		} else {
 			currentState = PlayerStates.None;
+			comboCount = 0;
 		}
 
 
@@ -78,16 +84,25 @@ public class BoardManager : MonoBehaviour {
 		for (int i = 0; i < gems.Count; i++) {
 			if (gems[i].isMatched) {
 				destroyGroup.Add(gems[i]);
-				gems [i].explode ();
 			}
 		}
+
+		if (destroyGroup.Count > 0) { 			//has matched one or more
+			if (comboCount >= 2) {
+				audioController.onCubeCombo ((float)comboCount/8);
+			} else {
+				audioController.onCubeExplode((float)comboCount/8);
+			}
+			comboCount++;
+		}
 		foreach (Gem gem in destroyGroup) {
+			gem.explode ();
 			gem.generateGem ();
 			gem.transform.position = new Vector3 (
 				gem.transform.position.x,
-				gem.transform.position.y + 7,
+				gem.transform.position.y + dropHeight,
 				gem.transform.position.z);
-			GameManager.scoreUp (1);
+			GameManager.scoreUp (1 * comboCount);
 		}
 	}
 
