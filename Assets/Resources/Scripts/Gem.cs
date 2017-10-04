@@ -14,7 +14,7 @@ public class Gem : MonoBehaviour {
 	public bool onPosition;
 	public bool isMatched;
 
-
+	[SerializeField]
 	private Gem[] neighbors = new Gem[4];
 
 	[SerializeField]
@@ -33,11 +33,16 @@ public class Gem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+	}
+
+	public void updateColors() {
 		for (int i = 0; i < 4; i++) {
 			if (neighbors[i] != null) 
 				nColors [i] = neighbors [i].color;
 		}
 	}
+
 
 	public void generateGem() {
 		color = COLORMAP [Random.Range (0, COLORMAP.Length)];
@@ -62,12 +67,14 @@ public class Gem : MonoBehaviour {
 	}
 
 	public void addNeighbor(Gem gem, int dir) {
+		updateColors ();
 		neighbors [dir] = gem;
 
 	}
 
 	public void removeNeighbor(Gem gem, int dir) {
-		//neighbors[dir] = null;
+		updateColors ();
+		neighbors[dir] = null;
 	}
 
 	public Gem getNeighbor(int dir) {

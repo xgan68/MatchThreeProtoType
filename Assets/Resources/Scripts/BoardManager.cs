@@ -6,8 +6,10 @@ public class BoardManager : MonoBehaviour {
 
 	static private bool CRAZY_MODE_ON;
 
+	static private readonly int COMBO_TO_INC_LIFE = 3;
 	private readonly int BOARDWIDTH = 5;
 	private readonly int BOARDHEIGHT = 8;
+	private static readonly float swapSpeed = 7.0f;
 
 	public static BoardManager instance;
 
@@ -25,6 +27,8 @@ public class BoardManager : MonoBehaviour {
 
 	static AudioController audioController;
 
+	private static GameManager gameManager;
+
 	private static int comboCount;
 	// Use this for initialization
 	void Start () {
@@ -32,6 +36,7 @@ public class BoardManager : MonoBehaviour {
 		onNewGameStart ();
 		currentState = PlayerStates.CheckMatch;
 		audioController = GameObject.Find ("AudioController").GetComponent<AudioController> ();
+		gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 		CRAZY_MODE_ON = false;
 		//checkForMatch ();
 	}
@@ -52,20 +57,25 @@ public class BoardManager : MonoBehaviour {
 		} else if (isBoardStable() && currentState == PlayerStates.CheckMatch) {
 			currentState = PlayerStates.Swapping;
 			checkForMatch ();
+
 		} 
 
 	}
 
 	void checkForMatch() {
 		if (gem1 && gem2)
-		resetGems ();
+			resetGems ();
 		if (foundMatch ()) {
 			destroyMatchGems ();
+			if (comboCount >= COMBO_TO_INC_LIFE) {
+				gameManager.increaseLife ();
+			}
+			gameManager.resetTimer ();
 		} else {
 			currentState = PlayerStates.None;
 			comboCount = 0;
+			gameManager.checkVital ();
 		}
-
 
 	}
 
@@ -73,7 +83,7 @@ public class BoardManager : MonoBehaviour {
 	bool isBoardStable() {
 		foreach (Gem gem in gems) {
 			//Debug.Log (gem.GetComponent<Rigidbody>().velocity.y);
-			if (Mathf.Abs(gem.GetComponent<Rigidbody>().velocity.y) > 0.01f) {
+			if (Mathf.Abs(gem.GetComponent<Rigidbody>().velocity.y) > 0.4f) {
 				return false;
 			}
 		}
@@ -105,7 +115,7 @@ public class BoardManager : MonoBehaviour {
 				gem.transform.position.x,
 				gem.transform.position.y + dropHeight,
 				gem.transform.position.z);
-			GameManager.scoreUp (1 * comboCount);
+			gameManager.scoreUp (1 * comboCount);
 		}
 	}
 
@@ -135,10 +145,10 @@ public class BoardManager : MonoBehaviour {
 	float startTime;
 	void moveGem(Gem gem, Vector3 start, Vector3 target) {
 		Vector3 center = (start + target) * 0.5f;
-		center -= new Vector3 (0, 0, -0.1f);
+		center -= new Vector3 (0, 1, 0);
 		Vector3 riseRel = start - center;
 		Vector3 setRel = target - center;
-		float frac = (Time.time - startTime) / 2f;
+		float frac = (Time.time - startTime) / 1f;
 		gem.transform.position = Vector3.Slerp (riseRel, setRel, frac);
 		gem.transform.position += center;
 	}
@@ -187,6 +197,7 @@ public class BoardManager : MonoBehaviour {
 				target1 = new Vector3(Mathf.Round(gem2.transform.position.x), 
 									Mathf.Round(gem2.transform.position.y), 0);
 				swapGems(gem1, gem2);
+				gameManager.decreaseLife ();
 			} else {
 				currentState = PlayerStates.None;
 				gem1 = null;
@@ -236,7 +247,7 @@ public class BoardManager : MonoBehaviour {
 		float remainingDistance = Vector3.Distance (gem.transform.position, target);
 
 		while (remainingDistance > 0.01f) {
-			gem.transform.position = Vector3.Lerp (gem.transform.position, target, Time.deltaTime * 5);
+			gem.transform.position = Vector3.Lerp (gem.transform.position, target, Time.deltaTime * swapSpeed);
 			remainingDistance = Vector3.Distance (gem.transform.position, target);
 
 			yield return null;
