@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Gem : MonoBehaviour {
 
-	private readonly string[] COLORMAP = {"Blue", "Red", "Green", "Yellow"};
+	private readonly string[] COLORMAP = {"Blue", "Red", "Green", "Yellow", "Purple", "Black", "White"};
 
 	string color;
 	GameObject gemCube;
 
+	private GameManager gameManager;
 	//public GameObject board;
 
 	public bool onPosition;
 	public bool isMatched;
+
 
 	[SerializeField]
 	private Gem[] neighbors = new Gem[4];
@@ -24,6 +26,7 @@ public class Gem : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 		gemCube = transform.Find ("Cube").gameObject;
 		generateGem ();
 		onPosition = false;
@@ -45,7 +48,7 @@ public class Gem : MonoBehaviour {
 
 
 	public void generateGem() {
-		color = COLORMAP [Random.Range (0, COLORMAP.Length)];
+		color = COLORMAP [Random.Range (0, gameManager.getDifficuty() - 1)];
 		Material gemMaterial = (Material)Resources.Load ("Materials/" + color);
 		gemCube.GetComponent<Renderer> ().material = gemMaterial;
 

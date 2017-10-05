@@ -8,13 +8,15 @@ public class FillBar : MonoBehaviour
 
 	public Image cooldown;
 	public bool coolingDown;
-	private float waitTime = 30f;
+	private float startWaitTime = 30f;
+	private float waitTime;
 	private AudioController audioController; 
 
 	void Start() {
 		gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 		audioController = GameObject.Find ("AudioController").GetComponent<AudioController> ();
 		coolingDown = true;
+		waitTime = startWaitTime;
 	}
 
 	// Update is called once per frame
@@ -39,5 +41,6 @@ public class FillBar : MonoBehaviour
 
 	public void resetTimer() {
 		cooldown.fillAmount = 1.0f;
+		waitTime = startWaitTime - Mathf.Min (25.0f, (gameManager.getDifficuty() - 4) * 10);
 	}
 }

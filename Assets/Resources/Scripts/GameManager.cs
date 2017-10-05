@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour {
 	[SerializeField]
 	public bool CRAZY_MODE_ON;
 
+	private int difficuty;
+
 	AudioController audioController;
 
 	private  int score;
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour {
 		life = STARTING_LIFE;
 		updateLifePanel ();
 		gameOverCanvas.enabled = false;
+		difficuty = 4;
 	}
 	
 	// Update is called once per frame
@@ -58,6 +61,7 @@ public class GameManager : MonoBehaviour {
 
 	public void scoreUp(int amount) {
 		score += amount;	
+		difficuty = 4 + Mathf.Min (2, score / 500);
 	}
 
 	public void checkVital() {
@@ -118,5 +122,13 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < explosion.transform.childCount; i++) {
 			explosion.transform.GetChild(i).gameObject.GetComponent<ParticleSystem>().Emit (10);
 		}
+	}
+
+	public int getDifficuty() {
+		return difficuty;
+	}
+
+	public void setDifficuty(int d) {
+		difficuty = d;
 	}
 }
