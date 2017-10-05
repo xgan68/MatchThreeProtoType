@@ -8,18 +8,27 @@ public class GameManager : MonoBehaviour {
 
 	private readonly float GAME_SPEED = 1.2f;
 	private readonly int STARTING_LIFE = 3;
+	private readonly float GRAVITY = -50.0f;
 
 	[SerializeField]
 	private Text scoreBoard;
 	[SerializeField]
-	private  Text lifePanel;
+	private Text lifePanel;
 	[SerializeField]
-	private  FillBar fillBar;
+	private FillBar fillBar;
 	[SerializeField]
-	private  Canvas redCanvas;
+	private Canvas redCanvas;
+	[SerializeField]
+	private Canvas gameOverCanvas;
+	[SerializeField]
+	private Text finalScore;
+	[SerializeField]
+	private GameObject explosion;
 
 	[SerializeField]
 	public bool CRAZY_MODE_ON;
+
+	AudioController audioController;
 
 	private  int score;
 	private  int scoreBoardScore;
@@ -28,10 +37,12 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Physics.gravity = new Vector3 (0, -50f, 0);
+		audioController = GameObject.Find ("AudioController").GetComponent<AudioController> ();
+		Physics.gravity = new Vector3 (0, GRAVITY, 0);
 		Time.timeScale = GAME_SPEED;
 		life = STARTING_LIFE;
 		updateLifePanel ();
+		gameOverCanvas.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -68,7 +79,7 @@ public class GameManager : MonoBehaviour {
 	private void updateLifePanel() {
 		lifePanel.text = life.ToString ();
 		resetTimer ();
-		setBloodEffect ();
+		setBloodEffect (false);
 	}
 
 	public void resetTimer() {
@@ -76,19 +87,36 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void gameOver() {
-		Debug.Log ("GameOVer");
-		returnToMainMenu ();
+		//Debug.Log ("GameOVer");
+		//returnToMainMenu ();
+		BoardManager.destroyAll();
+		setBloodEffect (true);
+		gameOverCanvas.enabled = true;
+		finalScore.text = score.ToString ();
+		fillBar.coolingDown = false;
+		gameOverExplosion ();
+		audioController.playClockTicking (false);
 	}
 
 	public void returnToMainMenu() {
 		SceneManager.LoadScene ("Main_Menu");
 	}
 
-	private void setBloodEffect() {
+	private void setBloodEffect(bool forceOff) {
+		if (forceOff) {
+			redCanvas.enabled = false;
+			return;
+		}
 		if (life <= 1) {
 			redCanvas.enabled = true;
 		} else {
 			redCanvas.enabled = false;
+		}
+	}
+
+	private void gameOverExplosion() {
+		for (int i = 0; i < explosion.transform.childCount; i++) {
+			explosion.transform.GetChild(i).gameObject.GetComponent<ParticleSystem>().Emit (10);
 		}
 	}
 }

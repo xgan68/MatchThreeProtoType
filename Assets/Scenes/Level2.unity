@@ -4577,9 +4577,9 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 761043618}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 2057404077}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -4925,7 +4925,7 @@ MonoBehaviour:
   gameOverCanvas: {fileID: 1443915392}
   finalScore: {fileID: 684201315}
   explosion: {fileID: 2063522278}
-  CRAZY_MODE_ON: 1
+  CRAZY_MODE_ON: 0
 --- !u!4 &1046677754
 Transform:
   m_ObjectHideFlags: 0
@@ -4989,7 +4989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.40419552, g: 0.5094589, b: 0.6544118, a: 0.928}
+  m_Color: {r: 0.40419552, g: 0.5094589, b: 0.6544118, a: 0.797}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -11878,7 +11878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7352941, g: 0.25410897, b: 0.25410897, a: 0.403}
+  m_Color: {r: 0.7352941, g: 0.25410897, b: 0.25410897, a: 0.179}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -11981,9 +11981,9 @@ Canvas:
   m_GameObject: {fileID: 1443915388}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 2057404077}
-  m_PlaneDistance: 1
+  m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0

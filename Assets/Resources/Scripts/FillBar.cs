@@ -7,7 +7,7 @@ public class FillBar : MonoBehaviour
 	GameManager gameManager;
 
 	public Image cooldown;
-	private bool coolingDown;
+	public bool coolingDown;
 	private float waitTime = 30f;
 	private AudioController audioController; 
 

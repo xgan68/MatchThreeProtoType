@@ -21,7 +21,7 @@ public class BoardManager : MonoBehaviour {
 	private Gem startingGem;
 	private int dropHeight = 10;
 
-	List<Gem> gems = new List<Gem> ();
+	static List<Gem> gems = new List<Gem> ();
 
 	static AudioController audioController;
 
@@ -81,6 +81,9 @@ public class BoardManager : MonoBehaviour {
 	bool isBoardStable() {
 		foreach (Gem gem in gems) {
 			//Debug.Log (gem.GetComponent<Rigidbody>().velocity.y);
+			if (gem == null) {
+				continue;
+			}
 			if (Mathf.Abs(gem.GetComponent<Rigidbody>().velocity.y) > 0.4f) {
 				return false;
 			}
@@ -259,5 +262,14 @@ public class BoardManager : MonoBehaviour {
 		{
 			startingGem = other.gameObject.GetComponent<Gem>();
 		}
+	}
+
+	public static void destroyAll() {
+		foreach (Gem gem in gems) {
+			if (gem != null) {
+				gem.gameObject.SetActive (false);
+			}
+		}
+		gems.Clear ();
 	}
 }
