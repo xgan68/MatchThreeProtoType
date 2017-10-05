@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour {
 
-	static private bool CRAZY_MODE_ON;
-
 	static private readonly int COMBO_TO_INC_LIFE = 3;
 	private readonly int BOARDWIDTH = 5;
 	private readonly int BOARDHEIGHT = 8;
@@ -37,7 +35,7 @@ public class BoardManager : MonoBehaviour {
 		currentState = PlayerStates.CheckMatch;
 		audioController = GameObject.Find ("AudioController").GetComponent<AudioController> ();
 		gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
-		CRAZY_MODE_ON = false;
+		comboCount = 0;
 		//checkForMatch ();
 	}
 	
@@ -185,7 +183,7 @@ public class BoardManager : MonoBehaviour {
 		case PlayerStates.FirstGemSelected:
 			toggleRotate (gem1);
 
-			if (!gem1.containsNeighbor (gem) && !CRAZY_MODE_ON) {
+			if (!gem1.containsNeighbor (gem) && !gameManager.CRAZY_MODE_ON) {
 				currentState = PlayerStates.None;
 				gem1 = null;
 				audioController.onInvailedMove ();

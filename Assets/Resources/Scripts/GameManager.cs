@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -14,6 +15,9 @@ public class GameManager : MonoBehaviour {
 	private  Text lifePanel;
 	[SerializeField]
 	private  FillBar fillBar;
+
+	[SerializeField]
+	public bool CRAZY_MODE_ON;
 
 	private  int score;
 	private  int scoreBoardScore;
@@ -44,7 +48,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void checkVital() {
-		if (life > 0) {
+		if (life <= 0) {
 			gameOver ();
 		}
 	}
@@ -69,6 +73,11 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void gameOver() {
-		Debug.Log ("Game Over");
+		Debug.Log ("GameOVer");
+		returnToMainMenu ();
+	}
+
+	public void returnToMainMenu() {
+		SceneManager.LoadScene ("Main_Menu");
 	}
 }
