@@ -8,10 +8,12 @@ public class FillBar : MonoBehaviour
 
 	public Image cooldown;
 	private bool coolingDown;
-	private float waitTime = 20.0f;
+	private float waitTime = 30f;
+	private AudioController audioController; 
 
 	void Start() {
 		gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+		audioController = GameObject.Find ("AudioController").GetComponent<AudioController> ();
 		coolingDown = true;
 	}
 
@@ -24,6 +26,13 @@ public class FillBar : MonoBehaviour
 			cooldown.fillAmount -= 1.0f / waitTime * Time.deltaTime;
 			if (cooldown.fillAmount <= 0f) {
 				gameManager.gameOver ();
+			}
+
+			//Clock ticking trigger
+			if (cooldown.fillAmount > 0 && cooldown.fillAmount < 7.0f / waitTime) { 	
+				audioController.playClockTicking (true);
+			} else {
+				audioController.playClockTicking (false);
 			}
 		}
 	}

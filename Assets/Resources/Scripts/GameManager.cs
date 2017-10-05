@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
 	private  Text lifePanel;
 	[SerializeField]
 	private  FillBar fillBar;
+	[SerializeField]
+	private  Canvas redCanvas;
 
 	[SerializeField]
 	public bool CRAZY_MODE_ON;
@@ -66,6 +68,7 @@ public class GameManager : MonoBehaviour {
 	private void updateLifePanel() {
 		lifePanel.text = life.ToString ();
 		resetTimer ();
+		setBloodEffect ();
 	}
 
 	public void resetTimer() {
@@ -79,5 +82,13 @@ public class GameManager : MonoBehaviour {
 
 	public void returnToMainMenu() {
 		SceneManager.LoadScene ("Main_Menu");
+	}
+
+	private void setBloodEffect() {
+		if (life <= 1) {
+			redCanvas.enabled = true;
+		} else {
+			redCanvas.enabled = false;
+		}
 	}
 }
