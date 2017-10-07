@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour {
 
 	[SerializeField]
 	public bool CRAZY_MODE_ON;
+	[SerializeField]
+	public bool JUST_FOR_FUN;
 
 	private int difficuty;
 
@@ -43,9 +45,12 @@ public class GameManager : MonoBehaviour {
 		Physics.gravity = new Vector3 (0, GRAVITY, 0);
 		Time.timeScale = GAME_SPEED;
 		life = STARTING_LIFE;
+		if (JUST_FOR_FUN) {
+			life = 999;
+		}
 		updateLifePanel ();
 		gameOverCanvas.enabled = false;
-		difficuty = 4;
+		difficuty = 0;
 	}
 	
 	// Update is called once per frame
@@ -61,7 +66,7 @@ public class GameManager : MonoBehaviour {
 
 	public void scoreUp(int amount) {
 		score += amount;	
-		difficuty = 4 + Mathf.Min (2, score / 500);
+		difficuty = Mathf.Min (12, score / 250);
 	}
 
 	public void checkVital() {
@@ -130,5 +135,29 @@ public class GameManager : MonoBehaviour {
 
 	public void setDifficuty(int d) {
 		difficuty = d;
+	}
+
+	public int numberOfColors() {
+		int colors = 4;
+
+		if (life >= 7 && difficuty >= 0) {
+			colors = 5;
+		} 
+
+		if (life == 6) {
+			BoardManager.destroyAllitemOf ("Purple");
+		}
+
+	
+
+	//	Debug.Log ("Color" + colors);
+		return colors;
+	}
+
+	public float timerWaitTime() {
+
+		float t = 10 - Mathf.Min (25.0f, difficuty * 5f);
+
+		return t;
 	}
 }

@@ -22,12 +22,14 @@ public class FillBar : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (coolingDown == true)
+		if (coolingDown == true && !gameManager.JUST_FOR_FUN)
 		{
 			//Reduce fill amount over 30 seconds
 			cooldown.fillAmount -= 1.0f / waitTime * Time.deltaTime;
 			if (cooldown.fillAmount <= 0f) {
-				gameManager.gameOver ();
+				gameManager.decreaseLife ();
+				gameManager.checkVital ();
+				resetTimer ();
 			}
 
 			//Clock ticking trigger
@@ -41,6 +43,6 @@ public class FillBar : MonoBehaviour
 
 	public void resetTimer() {
 		cooldown.fillAmount = 1.0f;
-		waitTime = startWaitTime - Mathf.Min (25.0f, (gameManager.getDifficuty() - 4) * 10);
+		waitTime = gameManager.timerWaitTime();
 	}
 }

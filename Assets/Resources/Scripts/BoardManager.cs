@@ -19,7 +19,7 @@ public class BoardManager : MonoBehaviour {
 	static Vector3 target1, target2;
 
 	private Gem startingGem;
-	private int dropHeight = 10;
+	private static int dropHeight = 10;
 
 	static List<Gem> gems = new List<Gem> ();
 
@@ -41,7 +41,7 @@ public class BoardManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (currentState);
+	//	Debug.Log (currentState);
 		if (currentState == PlayerStates.Swapping) {
 			if (gem1 != null && gem2 != null 
 				&& gem1.onPosition && gem2.onPosition) {
@@ -110,14 +110,18 @@ public class BoardManager : MonoBehaviour {
 			comboCount++;
 		}
 		foreach (Gem gem in destroyGroup) {
-			gem.explode ();
-			gem.generateGem ();
-			gem.transform.position = new Vector3 (
-				gem.transform.position.x,
-				gem.transform.position.y + dropHeight,
-				gem.transform.position.z);
+			destroyAndGenerate (gem);
 			gameManager.scoreUp (1 * comboCount);
 		}
+	}
+
+	static void destroyAndGenerate(Gem gem) {
+		gem.explode ();
+		gem.generateGem ();
+		gem.transform.position = new Vector3 (
+			gem.transform.position.x,
+			gem.transform.position.y + dropHeight,
+			gem.transform.position.z);
 	}
 
 	bool foundMatch() {
@@ -208,11 +212,11 @@ public class BoardManager : MonoBehaviour {
 			break;
 
 		case PlayerStates.Swapping:
-			Debug.Log ("Swapping");
+			//Debug.Log ("Swapping");
 			break;
 
 		case PlayerStates.CheckMatch:
-			Debug.Log ("Swapping");
+			//Debug.Log ("Swapping");
 			break;
 		}
 	}
@@ -271,5 +275,14 @@ public class BoardManager : MonoBehaviour {
 			}
 		}
 		gems.Clear ();
+	}
+
+
+	public static void destroyAllitemOf(string color) {
+		for (int i = 0; i < gems.Count; i++) {
+			if (gems[i].getColor() == color) {
+				gems [i].isMatched = true;
+			}
+		}
 	}
 }

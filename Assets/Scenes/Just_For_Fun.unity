@@ -4926,7 +4926,7 @@ MonoBehaviour:
   finalScore: {fileID: 684201315}
   explosion: {fileID: 2063522278}
   CRAZY_MODE_ON: 0
-  JUST_FOR_FUN: 0
+  JUST_FOR_FUN: 1
 --- !u!4 &1046677754
 Transform:
   m_ObjectHideFlags: 0

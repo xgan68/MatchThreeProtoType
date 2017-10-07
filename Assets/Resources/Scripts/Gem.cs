@@ -49,7 +49,7 @@ public class Gem : MonoBehaviour {
 
 
 	public void generateGem() {
-		color = COLORMAP [Random.Range (0, gameManager.getDifficuty())];
+		color = COLORMAP [Random.Range (0, gameManager.numberOfColors())];
 		Material gemMaterial = (Material)Resources.Load ("Materials/" + color);
 		gemCube.GetComponent<Renderer> ().material = gemMaterial;
 

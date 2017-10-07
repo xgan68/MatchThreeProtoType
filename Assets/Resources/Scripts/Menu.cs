@@ -26,7 +26,7 @@ public class Menu : MonoBehaviour {
 			SceneManager.LoadScene ("Level1");
 			break;
 		case MenuItems.CrazyMode:
-			SceneManager.LoadScene ("CrazyMode");
+			SceneManager.LoadScene ("Just_For_Fun");
 			break;
 		case MenuItems.Leave:
 			Application.Quit ();

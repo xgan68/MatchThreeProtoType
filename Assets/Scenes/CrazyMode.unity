@@ -4124,6 +4124,21 @@ Prefab:
       propertyPath: LightsModule.light
       value: 
       objectReference: {fileID: 773970707}
+    - target: {fileID: 199976094378413582, guid: bacbcf4237d6e0d419bfbbc237980fd8,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1d5ef2b3532e30141a9c9bcdf1f7b994, type: 2}
+    - target: {fileID: 199976094378413582, guid: bacbcf4237d6e0d419bfbbc237980fd8,
+        type: 2}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1d5ef2b3532e30141a9c9bcdf1f7b994, type: 2}
+    - target: {fileID: 23662422613215386, guid: bacbcf4237d6e0d419bfbbc237980fd8,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 366c158047fa9f24a92f3a8d42768e2d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bacbcf4237d6e0d419bfbbc237980fd8, type: 2}
   m_IsPrefabParent: 0

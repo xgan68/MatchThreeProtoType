@@ -14,3 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CrazyMode.unity
     guid: f2944e169a6acc549be9dfc2ceb3c7c8
+  - enabled: 1
+    path: Assets/Scenes/Just_For_Fun.unity
+    guid: 2899f8a4f3e9f9a47a62f15d8d2c3409
