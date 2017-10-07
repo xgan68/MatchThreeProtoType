@@ -3686,7 +3686,35 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1611061370686208, guid: a3dc47aecdb39054e9d19e6f76dbbe53, type: 2}
       propertyPath: m_Name
-      value: ScoreBoardPanel
+      value: LifeBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 114177187960630482, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8602941
+      objectReference: {fileID: 0}
+    - target: {fileID: 114177187960630482, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114177187960630482, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114177187960630482, guid: a3dc47aecdb39054e9d19e6f76dbbe53,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0.391
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723045468523154, guid: a3dc47aecdb39054e9d19e6f76dbbe53, type: 2}
+      propertyPath: m_Name
+      value: ScoreBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867339231072336, guid: a3dc47aecdb39054e9d19e6f76dbbe53, type: 2}
+      propertyPath: m_Name
+      value: LifeText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a3dc47aecdb39054e9d19e6f76dbbe53, type: 2}
@@ -4577,7 +4605,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 761043618}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 2057404077}
@@ -4918,8 +4946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bfe0b56cf851f0489f83125b0295d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreBoard: {fileID: 1111999235}
-  lifePanel: {fileID: 2122056467}
+  scoreBoard: {fileID: 2122056467}
+  lifePanel: {fileID: 1111999235}
   fillBar: {fileID: 513970864}
   redCanvas: {fileID: 761043622}
   gameOverCanvas: {fileID: 1443915392}
@@ -11980,7 +12008,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1443915388}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 2057404077}
@@ -12006,7 +12034,7 @@ GameObject:
   - component: {fileID: 1762708003}
   - component: {fileID: 1762708002}
   m_Layer: 0
-  m_Name: LifePanel
+  m_Name: SB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12029,7 +12057,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 106, y: -17}
+  m_AnchoredPosition: {x: 98, y: -17}
   m_SizeDelta: {x: 70, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1762708002
@@ -12039,7 +12067,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1762708000}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -15658,7 +15686,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -45, y: -28}
+  m_AnchoredPosition: {x: -57, y: -41}
   m_SizeDelta: {x: 204, y: 24}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2105626312
@@ -15706,7 +15734,7 @@ GameObject:
   - component: {fileID: 2122056468}
   - component: {fileID: 2122056467}
   m_Layer: 0
-  m_Name: Life
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15721,15 +15749,15 @@ RectTransform:
   m_GameObject: {fileID: 2122056465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 1762708001}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 15, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2122056467
 MonoBehaviour:
@@ -15752,11 +15780,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: 9ebb6ca5ee4094addac513cf8528f1e1, type: 2}
+    m_FontSize: 0
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -15764,7 +15792,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 99999
 --- !u!222 &2122056468
 CanvasRenderer:
   m_ObjectHideFlags: 0
